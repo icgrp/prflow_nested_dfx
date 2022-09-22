@@ -1,0 +1,16 @@
+INFO: [v++ 60-1306] Additional information associated with this v++ compile can be found at:
+	Reports: /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/reports/ydma
+	Log files: /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/logs/ydma
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/ydma.xo.compile_summary, at Sat Jun 11 11:03:17 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Sat Jun 11 11:03:17 2022
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/reports/ydma/v++_compile_ydma_guidance.html', at Sat Jun 11 11:03:18 2022
+INFO: [v++ 60-895]   Target platform: /opt/platforms/xilinx_zcu102_base_dfx_202110_1/xilinx_zcu102_base_dfx_202110_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/platforms/xilinx_zcu102_base_dfx_202110_1/hw/xilinx_zcu102_base_dfx_202110_1.xsa'
+INFO: [v++ 60-585] Compiling for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_zcu102_base_dfx_202110_1
+INFO: [v++ 60-242] Creating kernel: 'ydma'
+INFO: [v++ 60-594] Finished kernel compilation
+INFO: [v++ 60-586] Created ydma.xo
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/ydma.xo.compile_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 47s

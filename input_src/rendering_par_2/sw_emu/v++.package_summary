@@ -1,0 +1,140 @@
+<ENTRY>
+{
+ "thisFile": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/v++.package_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Sat Jun 11 11:04:32 2022",
+ "timestampMillis": "1654959872067",
+ "buildStep": {
+  "cmdId": "5d3d2370-0f82-423a-ad84-cd649727f05c",
+  "name": "v++",
+  "logFile": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/package/package.steps.log",
+  "commandLine": "/tools/Xilinx/Vitis/2021.1/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -p -t sw_emu --config ../cfg/zcu102_dfx.cfg ydma.xclbin --package.out_dir package --package.rootfs /opt/platforms/xilinx-zynqmp-common-v2021.1/rootfs.ext4 --package.sd_file ydma.xclbin --package.sd_file /opt/platforms/xilinx-zynqmp-common-v2021.1/Image --package.sd_file xrt.ini --package.sd_file emconfig.json --package.sd_file app.exe --package.sd_file run_app.sh ",
+  "args": [
+   "-p",
+   "-t",
+   "sw_emu",
+   "--config",
+   "../cfg/zcu102_dfx.cfg",
+   "ydma.xclbin",
+   "--package.out_dir",
+   "package",
+   "--package.rootfs",
+   "/opt/platforms/xilinx-zynqmp-common-v2021.1/rootfs.ext4",
+   "--package.sd_file",
+   "ydma.xclbin",
+   "--package.sd_file",
+   "/opt/platforms/xilinx-zynqmp-common-v2021.1/Image",
+   "--package.sd_file",
+   "xrt.ini",
+   "--package.sd_file",
+   "emconfig.json",
+   "--package.sd_file",
+   "app.exe",
+   "--package.sd_file",
+   "run_app.sh"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/cfg/zcu102_dfx.cfg",
+    "content": "platform=xilinx_zcu102_base_dfx_202110_1\ndebug=1\nsave-temps=1\n\n[profile]\ndata=all:all:all\n"
+   }
+  ],
+  "cwd": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Sat Jun 11 11:04:32 2022",
+ "timestampMillis": "1654959872067",
+ "status": {
+  "cmdId": "5d3d2370-0f82-423a-ad84-cd649727f05c",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Sat Jun 11 11:04:34 2022",
+ "timestampMillis": "1654959874356",
+ "buildSummary": {
+  "hardwarePlatform": "xilinx_zcu102_base_dfx_202110_1.xpfm",
+  "hardwareDsa": "xilinx_zcu102_base_dfx_202110_1.xsa",
+  "platformDirectory": "/opt/platforms/xilinx_zcu102_base_dfx_202110_1",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_PACKAGE",
+  "target": "TT_SW_EMU",
+  "binaryContainer": {
+   "base": {
+    "type": "BT_UKNOWN",
+    "name": "xcl_v++",
+    "file": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/a.xclbin",
+    "reports": [],
+    "uuid": ""
+   },
+   "kernels": []
+  },
+  "kernels": [],
+  "toolVersion": "Vitis V++ Compiler Release 2021.1. SW Build 3246112 on 2021-06-09-14:19:56",
+  "inputBinaryContainer": {
+   "base": {
+    "type": "BT_UKNOWN",
+    "name": "ydma",
+    "file": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/ydma.xclbin",
+    "reports": [],
+    "uuid": ""
+   },
+   "kernels": []
+  }
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Sat Jun 11 11:04:45 2022",
+ "timestampMillis": "1654959885193",
+ "report": {
+  "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/reports/package/v++_package_a_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Sat Jun 11 11:04:45 2022",
+ "timestampMillis": "1654959885193",
+ "report": {
+  "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/v++_package_a_guidance.pb",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Sat Jun 11 11:04:45 2022",
+ "timestampMillis": "1654959885194",
+ "status": {
+  "cmdId": "5d3d2370-0f82-423a-ad84-cd649727f05c",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>

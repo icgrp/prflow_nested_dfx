@@ -1,0 +1,41 @@
+{
+ "session": {
+  "name": "v++_link_ydma",
+  "uuid": "e1f94341-db97-4fb0-b2e2-cb610a89112b",
+  "description": "v++  -l -t sw_emu --config ../cfg/zcu102_dfx.cfg ./ydma.xo -o ydma.xclbin ",
+  "timestamp": "0",
+  "report_file": {
+   "scheme": "FILE",
+   "host": "",
+   "port": 0,
+   "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/reports/link/v++_link_ydma_guidance.html",
+   "query": "",
+   "fragment": "",
+   "media_type": "",
+   "encoding": "",
+   "data": ""
+  },
+  "proto_file": {
+   "scheme": "FILE",
+   "host": "",
+   "port": 0,
+   "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/v++_link_ydma_guidance.pb",
+   "query": "",
+   "fragment": "",
+   "media_type": "",
+   "encoding": "",
+   "data": ""
+  },
+  "build_target": "",
+  "config_files": [
+   {
+    "fileName": "../cfg/zcu102_dfx.cfg",
+    "contents": "platform=xilinx_zcu102_base_dfx_202110_1\ndebug=1\nsave-temps=1\n\n[profile]\ndata=all:all:all\n\n\n"
+   }
+  ]
+ },
+ "violation_count": 0,
+ "waived_count": 0,
+ "affirmation_count": 0
+}
+

@@ -1,0 +1,9 @@
+4.40
+1
+
+
+mem load:  4.38
+num of running threads:  1
+Tue 15 Feb 2022 06:25:55 PM EST
+mem load:  4.43
+num of running threads:  2

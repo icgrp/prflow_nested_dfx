@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="link" dir="">
+  <FileSets>
+    <FileSet Name="kernel_ydma" Type="DesignSrcs">
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/output_fun.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/data_transfer.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/gradient_weight_x2.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/tensor_weight_y2.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/outer_product1.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/top.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/tensor_weight_y1.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/gradient_weight_y_2.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/flow_calc_2.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/gradient_weight_x1.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/gradient_weight_y_3.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/gradient_weight_x3.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/outer_product2.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/tensor_weight_x1.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/gradient_weight_y_1.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/tensor_weight_x2.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/typedefs.h"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/gradient_xyz_calc.cpp"/>
+      <File Path="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/optical_flow512/sw_emu/_x/link/int/xo/ydma/ydma/cpu_sources/flow_calc_1.cpp"/>
+      <Config/>
+    </FileSet>
+  </FileSets>
+  <Runs/>
+</project>

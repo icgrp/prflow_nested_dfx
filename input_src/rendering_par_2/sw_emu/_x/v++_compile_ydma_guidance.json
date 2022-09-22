@@ -1,0 +1,41 @@
+{
+ "session": {
+  "name": "v++_compile_ydma",
+  "uuid": "9517e361-0acc-4c5c-b5d6-7156a7cb026e",
+  "description": "v++  -c -t sw_emu --config ../cfg/zcu102_dfx.cfg -k ydma -I/tools/Xilinx/Vivado/2021.1/include/ -I../ -I../host ../host/top.cpp ../host/typedefs.h ../operators/zculling_bot.cpp ../operators/zculling_top.cpp ../operators/coloringFB_bot_m.cpp ../operators/coloringFB_top_m.cpp ../operators/data_redir_m.cpp ../operators/rasterization2_m.cpp ../operators/data_transfer.cpp -o ydma.xo ",
+  "timestamp": "0",
+  "report_file": {
+   "scheme": "FILE",
+   "host": "",
+   "port": 0,
+   "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/reports/ydma/v++_compile_ydma_guidance.html",
+   "query": "",
+   "fragment": "",
+   "media_type": "",
+   "encoding": "",
+   "data": ""
+  },
+  "proto_file": {
+   "scheme": "FILE",
+   "host": "",
+   "port": 0,
+   "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/v++_compile_ydma_guidance.pb",
+   "query": "",
+   "fragment": "",
+   "media_type": "",
+   "encoding": "",
+   "data": ""
+  },
+  "build_target": "",
+  "config_files": [
+   {
+    "fileName": "../cfg/zcu102_dfx.cfg",
+    "contents": "platform=xilinx_zcu102_base_dfx_202110_1\ndebug=1\nsave-temps=1\n\n[profile]\ndata=all:all:all\n"
+   }
+  ]
+ },
+ "violation_count": 0,
+ "waived_count": 0,
+ "affirmation_count": 0
+}
+

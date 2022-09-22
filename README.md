@@ -196,6 +196,8 @@ export XILINX_VITIS=/mnt
 
 6. You should see the bunny shows up in the terminal.
  -->
+
+
 The starting code is forked from [PLD](https://github.com/icgrp/pld2022) repository
 [[Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)].
 The main differences are:
@@ -280,13 +282,27 @@ cd ./ydma/zcu102/zcu102_dfx_manual/overlay_p23/ && python get_blocked_resources.
 python parse_ovly_util.py
 ```
 
+This conclues overlay generation and creates `/PROJECT_DIR/workspace/F001_overlay/` directory.
 If you are interested in the Nested DFX,
 please take a look at [Setting PR Hierarchy in Vivado](#Setting-PR-Hierarchy-in-Vivado)
 
 
 ## Compile Optical Flow benchmark
 
-WIP
+cd to `/PROJECT_DIR/` and in [Makefile](Makefile), select the `prj_name`. Then,
+```
+make all -j$(nproc)
+```
+
+This will run HLS, Vivado synthesis for each operator in parallel.
+It synchronizes after the synthesis, and based on the resource utilization estimates, it 
+assigns appropriate pages(single, double, or quad), and launches implementations to generated partial bitstreams.
+
+For [Optical Flow (96, mix)](./input_src/optical_flow_96_final) benchmark,
+10 operators will be copmiled separately in parallel. Note that 9 operators are mapped on single pages,
+and one operator is mapped on a quad page (the bottom right).
+
+<p align="center"> <img src="images/optical_96_routed.png" height="800"> </p>
 
 
 ## Known Issues

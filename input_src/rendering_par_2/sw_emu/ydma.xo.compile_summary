@@ -1,0 +1,189 @@
+<ENTRY>
+{
+ "thisFile": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/ydma.xo.compile_summary",
+ "connectId": "",
+ "serverToken": "",
+ "timestamp": "0"
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_CmdStep",
+ "dateTimestamp": "Sat Jun 11 11:03:16 2022",
+ "timestampMillis": "1654959796734",
+ "buildStep": {
+  "cmdId": "f2385056-7c0d-4777-8ded-11d1cae97ab3",
+  "name": "v++",
+  "logFile": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/ydma/ydma.steps.log",
+  "commandLine": "/tools/Xilinx/Vitis/2021.1/bin/unwrapped/lnx64.o/v++  --vivado.prop \"run.__KERNEL__.{STEPS.SYNTH_DESIGN.ARGS.MORE OPTIONS}={-directive sdx_optimization_effort_high}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_route_design_summary steps {route_design} runs {impl_1} options {-max_paths 10}\" --advanced.misc \"report=type report_timing_summary name impl_report_timing_summary_post_route_phys_opt_design_summary steps {post_route_phys_opt_design} runs {impl_1} options {-max_paths 10}\" -c -t sw_emu --config ../cfg/zcu102_dfx.cfg -k ydma -I/tools/Xilinx/Vivado/2021.1/include/ -I../ -I../host ../host/top.cpp ../host/typedefs.h ../operators/zculling_bot.cpp ../operators/zculling_top.cpp ../operators/coloringFB_bot_m.cpp ../operators/coloringFB_top_m.cpp ../operators/data_redir_m.cpp ../operators/rasterization2_m.cpp ../operators/data_transfer.cpp -o ydma.xo ",
+  "args": [
+   "-c",
+   "-t",
+   "sw_emu",
+   "--config",
+   "../cfg/zcu102_dfx.cfg",
+   "-k",
+   "ydma",
+   "-I/tools/Xilinx/Vivado/2021.1/include/",
+   "-I../",
+   "-I../host",
+   "../host/top.cpp",
+   "../host/typedefs.h",
+   "../operators/zculling_bot.cpp",
+   "../operators/zculling_top.cpp",
+   "../operators/coloringFB_bot_m.cpp",
+   "../operators/coloringFB_top_m.cpp",
+   "../operators/data_redir_m.cpp",
+   "../operators/rasterization2_m.cpp",
+   "../operators/data_transfer.cpp",
+   "-o",
+   "ydma.xo"
+  ],
+  "iniFiles": [
+   {
+    "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/cfg/zcu102_dfx.cfg",
+    "content": "platform=xilinx_zcu102_base_dfx_202110_1\ndebug=1\nsave-temps=1\n\n[profile]\ndata=all:all:all\n"
+   }
+  ],
+  "cwd": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Sat Jun 11 11:03:16 2022",
+ "timestampMillis": "1654959796734",
+ "status": {
+  "cmdId": "f2385056-7c0d-4777-8ded-11d1cae97ab3",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_FlowMetaData",
+ "dateTimestamp": "Sat Jun 11 11:03:19 2022",
+ "timestampMillis": "1654959799000",
+ "buildSummary": {
+  "hardwarePlatform": "xilinx_zcu102_base_dfx_202110_1.xpfm",
+  "hardwareDsa": "xilinx_zcu102_base_dfx_202110_1.xsa",
+  "platformDirectory": "/opt/platforms/xilinx_zcu102_base_dfx_202110_1",
+  "runtime": "OpenCL",
+  "systemConfig": "Linux",
+  "flow": "BF_COMPILE",
+  "target": "TT_SW_EMU",
+  "kernels": [
+   {
+    "base": {
+     "type": "KERNEL",
+     "name": "ydma",
+     "file": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/ydma.xo",
+     "reports": [],
+     "uuid": ""
+    },
+    "sources": [
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/host/top.cpp",
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/host/typedefs.h",
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/operators/zculling_bot.cpp",
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/operators/zculling_top.cpp",
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/operators/coloringFB_bot_m.cpp",
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/operators/coloringFB_top_m.cpp",
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/operators/data_redir_m.cpp",
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/operators/rasterization2_m.cpp",
+     "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/operators/data_transfer.cpp"
+    ],
+    "psSources": [],
+    "cuNames": [],
+    "type": "HLS",
+    "frequency": 0,
+    "freqUnits": ""
+   }
+  ],
+  "toolVersion": "Vitis V++ Compiler Release 2021.1. SW Build 3246112 on 2021-06-09-14:19:56"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_SubCmdStep",
+ "dateTimestamp": "Sat Jun 11 11:03:19 2022",
+ "timestampMillis": "1654959799003",
+ "buildStep": {
+  "cmdId": "a9cb3e99-bf09-4853-bda5-df8528b0f627",
+  "name": "vitis_hls",
+  "logFile": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/ydma/ydma/vitis_hls.log",
+  "commandLine": "vitis_hls -f /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/ydma/ydma/ydma.tcl -messageDb vitis_hls.pb",
+  "args": [
+   "vitis_hls",
+   "-f",
+   "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/ydma/ydma/ydma.tcl",
+   "-messageDb",
+   "vitis_hls.pb"
+  ],
+  "iniFiles": [],
+  "cwd": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Sat Jun 11 11:03:19 2022",
+ "timestampMillis": "1654959799004",
+ "status": {
+  "cmdId": "a9cb3e99-bf09-4853-bda5-df8528b0f627",
+  "state": "CS_RUNNING"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Sat Jun 11 11:03:53 2022",
+ "timestampMillis": "1654959833915",
+ "status": {
+  "cmdId": "a9cb3e99-bf09-4853-bda5-df8528b0f627",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Sat Jun 11 11:03:54 2022",
+ "timestampMillis": "1654959834013",
+ "report": {
+  "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/reports/ydma/v++_compile_ydma_guidance.html",
+  "name": "",
+  "fileType": "HTML",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Report",
+ "dateTimestamp": "Sat Jun 11 11:03:54 2022",
+ "timestampMillis": "1654959834014",
+ "report": {
+  "path": "/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/v++_compile_ydma_guidance.pb",
+  "name": "",
+  "fileType": "BINARY_PROTOBUF",
+  "reportType": "GLOBAL_RULECHECK_GUIDANCE",
+  "cmdId": ""
+ }
+}
+</ENTRY>
+<ENTRY>
+{
+ "type": "ET_Status",
+ "dateTimestamp": "Sat Jun 11 11:03:54 2022",
+ "timestampMillis": "1654959834014",
+ "status": {
+  "cmdId": "f2385056-7c0d-4777-8ded-11d1cae97ab3",
+  "state": "CS_PASSED"
+ }
+}
+</ENTRY>

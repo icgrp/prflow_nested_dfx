@@ -1,0 +1,9 @@
+source sourceMe
+make all
+
+./package/launch_sw_emu.sh
+
+cd /media/sd-mmcblk0p1
+export XILINX_XRT=/usr
+export XCL_EMULATION_MODE=sw_emu
+

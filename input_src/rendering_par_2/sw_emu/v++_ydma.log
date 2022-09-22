@@ -1,0 +1,21 @@
+INFO: [v++ 60-1306] Additional information associated with this v++ link can be found at:
+	Reports: /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/reports/link
+	Log files: /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/logs/link
+INFO: [v++ 60-1548] Creating build summary session with primary output /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/ydma.xclbin.link_summary, at Sat Jun 11 11:04:05 2022
+INFO: [v++ 60-1316] Initiating connection to rulecheck server, at Sat Jun 11 11:04:05 2022
+INFO: [v++ 60-1315] Creating rulecheck session with output '/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/reports/link/v++_link_ydma_guidance.html', at Sat Jun 11 11:04:06 2022
+INFO: [v++ 60-895]   Target platform: /opt/platforms/xilinx_zcu102_base_dfx_202110_1/xilinx_zcu102_base_dfx_202110_1.xpfm
+INFO: [v++ 60-1578]   This platform contains Xilinx Shell Archive '/opt/platforms/xilinx_zcu102_base_dfx_202110_1/hw/xilinx_zcu102_base_dfx_202110_1.xsa'
+INFO: [v++ 60-629] Linking for software emulation target
+INFO: [v++ 60-423]   Target device: xilinx_zcu102_base_dfx_202110_1
+INFO: [v++ 60-645] kernel flags are '-g -I /tools/Xilinx/Vivado/2021.1/include -I /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512 -I /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/host -g'
+WARNING: [v++ 60-2336] Parameter compiler.enableSlrComputeUnitDrc was set to true, but no SLRs were specified via the command line.
+INFO: [v++ 60-586] Created ydma.xclbin
+INFO: [v++ 60-1307] Run completed. Additional information can be found in:
+	Guidance: /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/reports/link/v++_link_ydma_guidance.html
+	Steps Log File: /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/logs/link/link.steps.log
+
+INFO: [v++ 60-2343] Use the vitis_analyzer tool to visualize and navigate the relevant reports. Run the following command. 
+    vitis_analyzer /home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/ydma.xclbin.link_summary 
+INFO: [v++ 60-791] Total elapsed time: 0h 0m 26s
+INFO: [v++ 60-1653] Closing dispatch client.
