@@ -196,8 +196,6 @@ export XILINX_VITIS=/mnt
 
 6. You should see the bunny shows up in the terminal.
  -->
-please take a look at [Setting PR Hierarchy in Vivado](#setting-pr-hierarchy-in-vivado)
-
 The starting code is forked from [PLD](https://github.com/icgrp/pld2022) repository
 [[Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)].
 The main differences are:
