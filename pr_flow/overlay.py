@@ -54,7 +54,7 @@ class overlay(gen_basic):
     mono_v_list = self.verilog.return_operator_inst_v_list(operator_arg_dict, connection_list, operator_var_dict, operator_width_dict)
 
     # write the Verilog netlist to hipr directory
-    self.shell.write_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/src4level2/ydma_bb/mono.v', mono_v_list)
+    # self.shell.write_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/src4level2/ydma_bb/mono.v', mono_v_list)
 
     # Utilize hls class to prepare the high-level-synthesis work directory
     hls_inst = hls(self.prflow_params)
@@ -75,7 +75,7 @@ class overlay(gen_basic):
 
 
       # write the dummy netlist with only ports definitions to the hipr workspace
-      self.shell.write_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/src4level2/ydma_bb/'+operator+'.v', self.verilog.return_place_holder_v_list(operator, in_width_list, out_width_list, is_dummy=True)) 
+      # self.shell.write_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/src4level2/ydma_bb/'+operator+'.v', self.verilog.return_place_holder_v_list(operator, in_width_list, out_width_list, is_dummy=True)) 
 
   # run.sh will be used for generating the overlay.dcp 
   def return_run_sh_list_local(self, operators, bft_n, tandem_mode):
@@ -192,39 +192,39 @@ class overlay(gen_basic):
     str_line =  'pr_subdivide -cell '+self.prflow_params['inst_name'].replace('/ydma_1', '') +' -subcells {'
     for operator in operators.split(): str_line += self.prflow_params['inst_name'] + '/mono_inst/'+operator+'_inst '
     str_line += '} ./checkpoint/pfm_dynamic_new_bb.dcp'
-    self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/tcl/sub_divided.tcl', {'pr_subdivide': str_line})
+    # self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/tcl/sub_divided.tcl', {'pr_subdivide': str_line})
 
     # update the tcl script to place&route the overlay with dummy logic
     str_line = ''
     for operator in operators.split():
       str_line += '      file_out.write(\'set_property SCOPED_TO_CELLS {'+self.prflow_params['inst_name']+'/mono_inst/'+operator+'_inst }  [get_files ../../../../../../../../../place_holder/'+operator+'_netlist.dcp]\\n\')\n'
-    self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/python/mk_overlay_tcl.py', {'scope_anchor': str_line})
+    # self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/python/mk_overlay_tcl.py', {'scope_anchor': str_line})
 
     str_line = ''
     for operator in operators.split():
       str_line += '      file_out.write(\'add_files ../../../../../../../../../place_holder/'+operator+'_netlist.dcp\\n\')\n'
-    self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/python/mk_overlay_tcl.py', {'page.dcp': str_line})
+    # self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/python/mk_overlay_tcl.py', {'page.dcp': str_line})
         
     str_line = '      file_out.write(\'link_design -mode default -part '+self.prflow_params['part']+' -reconfig_partitions {'
     for operator in operators.split():
       str_line += self.prflow_params['inst_name']+'/mono_inst/'+operator+'_inst '
     str_line += '} -top '+self.prflow_params['top_name']+'\\n\')'
-    self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/python/mk_overlay_tcl.py', {'link_design': str_line})
+    # self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/python/mk_overlay_tcl.py', {'link_design': str_line})
 
     str_line = ''
     for operator in operators.split(): str_line += '      file_out.write(\'report_utilization -pblocks '+operator+' > ../../../../../../../../../utilization_'+operator+'.rpt\\n\')\n'
-    self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/python/mk_overlay_tcl.py', {'utilization_anchor': str_line})
+    # self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/python/mk_overlay_tcl.py', {'utilization_anchor': str_line})
 
     # update the DFX region shell targets according to the benchmark in the Makefile
     str_line = 'base_list='
     for operator in operators.split(): str_line += operator+' '
-    self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/Makefile', {'base_list=': str_line})
-    self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/Makefile', {'vitis_impl_tcl_name=': 'vitis_impl_tcl_name='+self.prflow_params['top_name']})
+    # self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/Makefile', {'base_list=': str_line})
+    # self.shell.replace_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/Makefile', {'vitis_impl_tcl_name=': 'vitis_impl_tcl_name='+self.prflow_params['top_name']})
 
     # construct the tcl script to generate the abstract shell 
-    for operator in operators.split(): 
-      self.shell.write_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/tcl/gen_abs_'+operator+'.tcl',\
-                             self.tcl.return_gen_abs_tcl_list('./checkpoint/overlay.dcp', self.prflow_params['inst_name']+'/mono_inst/'+operator+'_inst ', './checkpoint/'+operator+'.dcp'))
+    # for operator in operators.split(): 
+    #   self.shell.write_lines(self.overlay_dir+'/ydma/'+self.prflow_params['board']+'/'+self.prflow_params['board']+'_dfx_hipr/tcl/gen_abs_'+operator+'.tcl',\
+    #                          self.tcl.return_gen_abs_tcl_list('./checkpoint/overlay.dcp', self.prflow_params['inst_name']+'/mono_inst/'+operator+'_inst ', './checkpoint/'+operator+'.dcp'))
 
   def update_resource_pragma(self, operators):
     pragma_dict = {}
@@ -248,6 +248,7 @@ class overlay(gen_basic):
     with open(makefile, "r") as file:
       filedata = file.read()
     filedata = filedata.replace("checkpoint", "overlay_p"+str(bft_n))
+    filedata = filedata.replace("_p31", "_p"+str(bft_n))
 
     # old_str = ("base_list=page2 page3 page4 page5 page6 page7 page8 page9 page10 page11 page12 page13 page14 page15 page16 page17 page18 page19 page20"
     #             " page21 page22 page23 page24 page25 page26 page27 page28 page29 page30 page31")
