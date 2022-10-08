@@ -47,11 +47,6 @@ ifeq ($(overlay_type),hipr)
 overlay_suffix=_$(prj_name)
 endif
 
-# TEST_OPS := $(shell python ./pr_flow/parse_op_list.py -prj $(prj_name))
-# test:
-# 	echo $(TEST_OPS)
-# 	echo $(operators)
-# 	echo $(basename $(notdir $(operators_bit_targets)))
 	
 
 # all: $(mono_target)
@@ -75,7 +70,6 @@ $(operators_xclbin_targets):$(ws_bit)/%.xclbin:$(ws_bit)/%.bit
 	python2 pr_flow.py $(prj_name) -xclbin -op $(basename $(notdir $@))
 	cd $(ws_bit) && ./main_$(basename $(notdir $@)).sh $(operators_impl)
 
-## uncomment for regular flow
 bits:$(operators_bit_targets) # NOTE: operators_impl
 # Implementation from post-synthesis DCP to bitstreams
 # generate bitstream for each operator
@@ -110,7 +104,6 @@ $(operators_syn_targets):$(ws_syn)/%/page_netlist.dcp:$(ws_hls)/runLog%.log $(ws
 .PHONY: report 
 report: 
 	 python2 ./pr_flow.py $(prj_name) -op '$(basename $(notdir $(operators_bit_targets)))' -rpt
-## uncomment for regular flow
 
 
 hls: $(operators_hls_targets)
@@ -124,30 +117,6 @@ $(ws_overlay)$(overlay_suffix)/__overlay_is_ready__:
 	python2 pr_flow.py $(prj_name) -g -op '$(basename $(notdir $(operators)))' -bft_n=$(bft_n)
 	cd ./workspace/F001_overlay$(overlay_suffix) && ./main.sh
 
-
-## uncomment for routing test or abs shell test
-# bits:$(operators_bit_targets) # NOTE: operators_impl
-# $(operators_bit_targets):$(ws_overlay)$(overlay_suffix)/__overlay_is_ready__ $(operators_syn_targets) $(ws_syn)/pblock_assignment.json
-# 	python2 pr_flow.py $(prj_name) -impl -s_dcp $(syn_dcp) -op $(basename $(notdir $@))
-# 	cd $(ws_impl)/$(basename $(notdir $@)) && ./main.sh $(operators_impl)
-
-# pg_assign:$(ws_syn)/pblock_assignment.json
-# $(ws_syn)/pblock_assignment.json:$(operators_syn_targets) $(operators_dir)/pblock_assignment.json
-# 	cp ./common/script_src/test_pg_assign.py $(ws_syn)/
-# 	cp $(operators_dir)/pblock_assignment.json $(ws_syn)/pblock_assignment.json
-# 	cp $(operators_dir)/page_assignment.json $(ws_syn)/page_assignment.json
-# 	cd $(ws_syn) && python test_pg_assign.py
-
-# syn:$(operators_syn_targets)
-# # Out-of-Context Synthesis from Verilog to post-synthesis DCP
-# $(operators_syn_targets):$(ws_syn)/%/page_netlist.dcp:$(ws_hls)/runLog%.log $(ws_overlay)$(overlay_suffix)/__overlay_is_ready__ ./pr_flow/syn.py
-# 	python2 pr_flow.py $(prj_name) -syn -op $(subst runLog,,$(basename $(notdir $<)))
-# 	#cd $(ws_syn)/$(subst runLog,,$(basename $(notdir $<)))/riscv && ./qsub_run.sh
-# 	cd $(ws_syn)/$(subst runLog,,$(basename $(notdir $<))) && ./main.sh $(operators)
-# .PHONY: report 
-# report:
-# 	python2 ./pr_flow.py $(prj_name) -op '$(basename $(notdir $(operators_bit_targets)))' -rpt -rt
-## uncomment for routing test
 
 optical_test: optical_64_random optical_96_test
 
@@ -198,47 +167,6 @@ revert_to_init:
 	mv ./input_src/$(prj_name)/operators/top.cpp ./input_src/$(prj_name)/host/top.cpp
 
 
-# incr_1:
-# 	python2 pr_flow.py $(prj_name) -incr --winner 1 -op '$(operators)'
-# incr_2:
-# 	python2 pr_flow.py $(prj_name) -incr --winner 2 -op '$(operators)'
-
-# ifeq ("$(wildcard ./input_src/$(prj_name)/operators/test/__test_done__)","")
-# 	COMPILE_SINGLE_TARGETS = hls_single syn_single bit_single xclbin_single runtime_single
-# else
-# 	COMPILE_SINGLE_TARGETS = test_done
-# endif
-# operator_test=$(basename $(notdir $(wildcard $(operators_dir)/*_test.cpp)))
-
-# compile_single: $(COMPILE_SINGLE_TARGETS)
-
-# runtime_single:
-# 	python2 pr_flow.py $(prj_name) -runtime -op '$(basename $(notdir $(operators)))'
-# 	cp $(operators_xclbin_targets) $(ws_bit)/sd_card
-# 	cd $(ws_bit)/$(prj_name)/host && ./gen_runtime.sh
-# 	cd $(ws_bit)/$(prj_name)/host && ./gen_runtime_check_result.sh
-# 	#cd $(ws_bit)/$(prj_name)/host && ./gen_runtime_single.sh
-
-# xclbin_single: 
-# 	python2 pr_flow.py $(prj_name) -xclbin -op $(operator_test)
-# 	cd $(ws_bit) && ./main_$(operator_test).sh $(operators)
-# bit_single:
-# 	python2 pr_flow.py $(prj_name) -impl -op $(operator_test)
-# 	cd $(ws_impl)/$(operator_test) && ./main.sh $(operators)
-# syn_single:
-# 	python2 pr_flow.py $(prj_name) -syn -op $(operator_test)
-# 	cd $(ws_syn)/$(operator_test) && ./main.sh $(operators)
-# hls_single:
-# 	python2 pr_flow.py $(prj_name) -hls -op $(operator_test)
-# 	cd $(ws_hls) && ./main_$(operator_test).sh $(operators)
-# test_done:
-# 	echo "incremental compile done"
-# run_on_fpga:
-# 	if [ ! -f ./input_src/$(prj_name)/operators/test/__test_done__ ]; then cd $(ws_bit) && ./run_on_fpga.sh; fi
-# run_on_fpga_single:
-# 	if [ ! -f ./input_src/$(prj_name)/operators/test/__test_done__ ]; then cd $(ws_bit) && ./run_on_fpga_single.sh; fi
-
-
 
 $(ws_overlay)$(overlay_suffix)/src : common/verilog_src/*  common/script_src/project_syn_gen_zcu102.tcl
 	rm -rf ./workspace/F001_overlay
@@ -257,12 +185,6 @@ $(operators_ip_targets):$(ws_mbft)/ip_repo/%/prj/floorplan_static.xpr:$(ws_hls)/
 	echo $@
 	python2 pr_flow.py $(prj_name) -ip -op $(subst runLog,,$(basename $(notdir $<)))
 	cd $(ws_mbft)/ip_repo/$(subst runLog,,$(basename $(notdir $<))) && ./qsub_run.sh
-
-cp_mono_prj: ./workspace/vitis/floorplan_static_wrapper.xsa 
-
-./workspace/vitis/floorplan_static_wrapper.xsa: ./workspace/F007_mono_bft_$(prj_name)/prj/floorplan_static.sdk/floorplan_static_wrapper.xsa
-	mkdir -p workspace/vitis
-	cp $< ./workspace/vitis
 
 
 clear:
