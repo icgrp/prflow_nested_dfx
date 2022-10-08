@@ -247,9 +247,9 @@ Finally, our framework generates all the utilization reports, excludes the block
 and outputs a file that contains the information on each PR page's available resources.
 
 
-### Run the code to generate the static design
+### Generate the static design
 
-To create a static design(overlay) for PR pages, you can simply run the command below in your `/PROJECT_DIR/`.
+To create a static design(overlay) for PR pages, you can simply run the command below in your `/<PROJECT_DIR>/`.
 
 ```
 make overlay -j$(nproc)
@@ -259,17 +259,17 @@ When generating an overlay, you should encounter an `ERROR: [DRC RTSTAT-5] Parti
 
 ![](images/partial_ant_error.png)
 
-In this case, cd to `/PROJECT_DIR/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` and open up Vivado GUI with
+In this case, cd to `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` and open up Vivado GUI with
 `vivado &`. In Tcl console, copy and paste the scripts that encountered the errors.
 With the given floorplanning(\*.xdc files), scripts that cause this error are:
 
-- `/PROJECT_DIR/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/tcl/nested/pr_recombine_dynamic_region.tcl`
-- `/PROJECT_DIR/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/tcl/nested/pr_recombine_p8.tcl`
+- `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/tcl/nested/pr_recombine_dynamic_region.tcl`
+- `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/tcl/nested/pr_recombine_p8.tcl`
 
 Once you manually generate `dynamic_region.bit` and `p8.dcp`, you can restart the Makefile in
-`/PROJECT_DIR/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` directory by entering `make all -j24`,
+`/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` directory by entering `make all -j24`,
 with the number of jobs you want to run in parallel. Then, in the same directory, run the rest of the commands in
-`/PROJECT_DIR/workspace/F001_overlay/run.sh` that were supposed to run.
+`/<PROJECT_DIR>/workspace/F001_overlay/run.sh` that were supposed to run.
 
 ```
 ./shell/run_xclbin.sh
@@ -282,14 +282,14 @@ cd ./ydma/zcu102/zcu102_dfx_manual/overlay_p23/ && python get_blocked_resources.
 python parse_ovly_util.py
 ```
 
-This conclues overlay generation and creates `/PROJECT_DIR/workspace/F001_overlay/` directory.
+This conclues overlay generation and creates `/<PROJECT_DIR>/workspace/F001_overlay/` directory.
 If you are interested in the Nested DFX,
 please take a look at [Setting PR Hierarchy in Vivado](#Setting-PR-Hierarchy-in-Vivado)
 
 
 ## Compile Optical Flow benchmark
 
-cd to `/PROJECT_DIR/` and in [Makefile](Makefile), select the `prj_name`. Then,
+cd to `/<PROJECT_DIR>/` and in [Makefile](Makefile), select the `prj_name`. Then,
 ```
 make all -j$(nproc)
 ```
@@ -304,6 +304,38 @@ and one operator is mapped on a quad page (the bottom right).
 
 <p align="center"> <img src="images/optical_96_routed.png" height="800"> </p>
 
+## Run on the device
+
+1. Use **GParted** to prepare a SD card to boot the ZCU102 board.
+<p align="center"> <img src="images/sd_card_1.png" height="250"> </p>
+<p align="center"> <img src="images/sd_card_2.png" height="250"> </p>
+
+2. Copy the boot files to **BOOT**.
+```
+cp /<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/overlay_p23/package/sd_card/* /media/<YOUR_ACCOUNT>/BOOT/
+```
+
+3. Copy rootfs files to **rootfs**. For instance,
+```
+sudo tar -zxvf /opt/platforms/xilinx_zcu102_base_dfx_202110_1/sw/xilinx_zcu102_base_dfx_202110_1/xrt/filesystem/rootfs.tar.gz -C /media/<YOUR_ACCOUNT>/rootfs/
+```
+
+4. Safely unplug the SD card from the workstation and slide it into the ZCU102. Power on the device.
+
+5. You can refer to [this post](https://dj-park.github.io/posts/2022/1/scp-emb/) set up the ip addresses for the workstation and the ZCU102.
+
+6. scp the generated `.xclbin` files and the host executable, like below.
+  Note that for the optical flow benchmark, you need to scp [current](./input_src/current) directory too.
+  The spam filter benchmark needs [data](./input_src/data) and the digit recognition needs [196data](./input_src/digit_reg_par_40).
+```
+scp -i ~/.ssh/id_rsa_zcu102 -r ./workspace/F005_bits_optical_flow_96_final/sd_card/* root@10.10.7.1:/media/sd-mmcblk0p1/
+```
+
+
+7. ssh to the ZCU102 and cd `/media/sd-mmcblk0p1/`. Run the application:
+```
+./run_app.sh
+```
 
 ## Known Issues
 
@@ -311,9 +343,9 @@ and one operator is mapped on a quad page (the bottom right).
 
 If you take a close look at our code, 
 1. we are 'unnecessarily' generating duplicate 'page_double_subdivide_*.dcp' or 'page_quad_subdivide_*.dcp' in
-   `/PROJECT_DIR/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/overlay_p23/subdivide`
+   `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/overlay_p23/subdivide`
 2. and in the verilog sources files for the designs above
-   (e.g. `/PROJECT_DIR/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/p_d_s_p2.v`), there's a dummy register.
+   (e.g. `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/p_d_s_p2.v`), there's a dummy register.
 
    ![](images/dummy_reg.png)
 
@@ -325,7 +357,7 @@ p4 is the parent pblock of p4_p0 and p4_p1. p4_p0 is the parent block of p4_p0_p
 Vivado sometimes doesn't recognize such hierarchy.
 
 We manage to resolve this issue by creating a separate synthesized checkpoint for each double page and
-quad page to be subdivided, like 'page_double_subdivide_*.dcp' or 'page_quad_subdivide_*.dcp'.
+quad page to be subdivided, like `page_double_subdivide_*.dcp` or `page_quad_subdivide_*.dcp`.
 Furthermore, while our double page consists of two single pages and nothing else left 
 other than some routing to the single pages,
 we place a dummy register. 
