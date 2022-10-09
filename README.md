@@ -196,13 +196,17 @@ export XILINX_VITIS=/mnt
 
 6. You should see the bunny shows up in the terminal.
  -->
-
+Different from the previous works, this work provides **variable-sized pages that
+are hierarchically recombined from multiple smaller pages** depending on the size
+of user operators.
+This unique capability not only accelerates FPGA compilation but also relieves users of the 
+burden to fit the operators to the fixed-sized pages.
 
 The starting code is forked from [PLD](https://github.com/icgrp/pld2022) repository
 [[Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)].
 The main differences are:
-1. static design generation using Hierarchical Partial Reconfiguration(a.k.a Nested DFX)
-2. synchronization after the synthesis jobs for page assignment
+1. static design generation using Hierarchical Partial Reconfiguration(a.k.a Nested DFX), thereby providing variable-sized PR pages
+2. synchronization after the synthesis jobs for automatic page assignment
 
 Note that we slightly modified the floorplanning of
 [ZCU102 Base DFX platform](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2021-1.html) to reserve more area for the dynamic region.
