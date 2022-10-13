@@ -1,4 +1,4 @@
-# Separate Compilations with Variable-sized Pages using Nested DFX
+# Fast and Flexible FPGA development using Hierarchical Partial Reconfiguration
 
 <!-- 
 ## 1 Tool Setup
@@ -200,7 +200,7 @@ Different from the previous works, this work provides **variable-sized pages tha
 are hierarchically recombined from multiple smaller pages** depending on the size
 of user operators.
 This unique capability not only accelerates FPGA compilation but also relieves users of the 
-burden to fit the operators to the fixed-sized pages.
+burden to fit the operators to the fixed-sized pages. For more details, please refer to our FPT2022 paper.
 
 The starting code is forked from [PLD](https://github.com/icgrp/pld2022) repository
 [[Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)].
