@@ -264,7 +264,10 @@ When generating an overlay, you should encounter an `ERROR: [DRC RTSTAT-5] Parti
 
 We consider this as a potential bug in Vivado.
 In this case, cd to `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` and open up **Vivado GUI** with
-`vivado &`. In Tcl console, manually copy and paste the contents of the scripts that encountered the errors.
+`vivado &`. In Tcl console, manually copy and paste the contents of the scripts that encountered the errors as shown below.
+
+<p align="center"> <img src="images/vivado_gui_tcl.png"> </p>
+
 With the given floorplanning(\*.xdc files), scripts that cause this error are:
 
 - `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/tcl/nested/pr_recombine_dynamic_region.tcl`
