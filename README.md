@@ -210,7 +210,7 @@ Once you successfully generated separate `.xclbin` files and host executable in
    ```
    As an application latency, we include the time to set kernel argument, the time to transfer to/from data, and kernel execution time.
    It is 8808 us for [Optical Flow (96, mix)](./input_src/optical_flow_96_final) as shown below.
-<p align="center"> <img src="images/results.png" > </p>
+   <p align="center"> <img src="images/results.png" height="700"> </p>
 
 
 ## Known Issues
