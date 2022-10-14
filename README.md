@@ -3,8 +3,6 @@ To address slow FPGA compilation, researchers
 have proposed to run separate compilations for smaller design
 components using Partial Reconfiguration 
 ([[Xiao/FPT2019](https://ic.ese.upenn.edu/abstracts/prflow_fpt2019.html), [Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)]).
-
-
 Different from the previous works, this work provides **variable-sized** ***pages*** **that
 are hierarchically recombined from multiple smaller pages** depending on the size
 of user operators.
@@ -16,10 +14,9 @@ The starting code is forked from [PLD](https://github.com/icgrp/pld2022) reposit
 The main differences are:
 1. static design generation using Hierarchical Partial Reconfiguration(a.k.a Nested DFX), thereby providing variable-sized PR pages
 2. synchronization after the synthesis jobs for automatic page assignment
-We run the system on Ubuntu 20.04 with kernel 5.4.0.
 
 ## Setup
-The framework is developed with 
+The framework is developed with Ubuntu 20.04 with kernel 5.4.0,
 [Vitis 2021.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2021-1.html) 
 and Xilinx ZCU102 evaluation board.
 
