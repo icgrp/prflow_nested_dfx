@@ -71,7 +71,7 @@ and adjust the configurations in [./common/configure/zcu102/configure.xml](./com
 As stated in the Xilinx [user guide for PR](https://www.xilinx.com/content/dam/xilinx/support/documents/sw_manuals/xilinx2022_1/ug909-vivado-partial-reconfiguration.pdf#page=62),
 the Nested DFX does not allow more than one RP to be subdivided until the first RP has a placed/routed design.
 This means that we need a series of subdivisions followed by place/route.
-So, we will first subdivide the single RP from the ZCU102 Base DFX platform into 7 children RPs: p2(double page), p4(quad page), p12(quad page), p16(quad page), p20(quad page),
+Therefore, we will first subdivide the single RP from the ZCU102 Base DFX platform into 7 children RPs: p2(double page), p4(quad page), p12(quad page), p16(quad page), p20(quad page),
 and p_NoC(pblock for NoC).
 
 After the first subdivision, we have a routed design that looks like below.
@@ -105,6 +105,7 @@ and outputs a file that contains the information on each PR page's available res
 ### Generate the static design
 
 To create a static design(overlay) for PR pages, you can simply run the command below in your `/<PROJECT_DIR>/`.
+Note that this process can take >3 hours depending on the system CPU/RAM.
 
 ```
 make overlay -j$(nproc)
