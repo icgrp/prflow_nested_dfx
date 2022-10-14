@@ -1,8 +1,8 @@
 # Fast and Flexible FPGA development using Hierarchical Partial Reconfiguration
 To address slow FPGA compilation, researchers
 have proposed to run separate compilations for smaller design
-components using Partial Reconfiguration 
-([[Xiao/FPT2019](https://ic.ese.upenn.edu/abstracts/prflow_fpt2019.html), [Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)]).
+components using Partial Reconfiguration(PR) 
+[[Xiao/FPT2019](https://ic.ese.upenn.edu/abstracts/prflow_fpt2019.html), [Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)].
 Different from the previous works, this work provides **variable-sized** ***pages*** **that
 are hierarchically recombined from multiple smaller pages** depending on the size
 of user operators.
@@ -24,7 +24,7 @@ and Xilinx ZCU102 evaluation board.
 If you install Vitis on **/tools/Xilinx**, you should set **Xilinx_dir** 
 in [./common/configure/configure.xml](./common/configure/configure.xml) as below.
 ```xml
-  <spec name = "Xilinx_dir" value = "/tools/Xilinx/Vitis/2021.1/setting64.sh" />
+  <spec name = "Xilinx_dir"         value = "/tools/Xilinx/Vitis/2021.1/settings64.sh" />
 ```
 
 ### Common image
@@ -38,7 +38,7 @@ Locate the image to the directory of your choice(e.g. /opt/platforms/), and adju
 
 ### ZCU102 Base DFX platform
 You can create ZCU102 Base DFX paltform from 
-[Vitis Embedded Platform Source repo](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.1).
+[Vitis Embedded Platform Source repo(2021.1 branch)](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.1).
 We slightly modified the floorplanning of ZCU102 Base DFX platform
 to reserve more area for the dynamic region.
 This can be done by replacing 
@@ -65,7 +65,7 @@ and adjust the configurations in [./common/configure/zcu102/configure.xml](./com
 ### <a name="overview"></a>Overview
 
 <!-- We want to create pages whose sizes can be single, double and quad depending on the sizes of user operators. -->
-As stated in the Xilinx [user guide for PR](https://www.xilinx.com/content/dam/xilinx/support/documents/sw_manuals/xilinx2022_1/ug909-vivado-partial-reconfiguration.pdf#page=62),
+As stated in the [Xilinx user guide for DFX](https://www.xilinx.com/content/dam/xilinx/support/documents/sw_manuals/xilinx2022_1/ug909-vivado-partial-reconfiguration.pdf#page=62),
 the Nested DFX does not allow more than one RP to be subdivided until the first RP has a placed/routed design.
 This means that we need a series of subdivisions followed by place/route.
 Therefore, we will first subdivide the single RP from the ZCU102 Base DFX platform into 7 children RPs: p2(double page), p4(quad page), p12(quad page), p16(quad page), p20(quad page),
@@ -102,13 +102,14 @@ and outputs a file that contains the information on each PR page's available res
 ### Generate the static design
 
 To create a static design(overlay) for PR pages, you can simply run the command below in your `/<PROJECT_DIR>/`.
-Note that this process can take >3 hours depending on the system CPU/RAM.
+Note that this process can take >4 hours depending on the system CPU/RAM because of the sequentialized charateristic of
+Xilinx Nested DFX technology.
 
 ```
 make overlay -j$(nproc)
 ```
 
-When generating an overlay, you should encounter an `ERROR: [DRC RTSTAT-5] Partial antennas`.
+When generating an overlay, you should encounter an `ERROR: [DRC RTSTAT-5] Partial antennas` like below.
 
 ![](images/partial_ant_error.png)
 
@@ -126,7 +127,7 @@ With the given floorplanning(\*.xdc files), scripts that cause this error are:
 Once you manually generate `dynamic_region.bit` and `p8.dcp`, 
 cd to 
 `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` directory 
-and continue the Makefile by entering `make all -j$(proc)`. 
+and continue the Makefile by entering `make all -j$(nproc)`. 
 Then, in the same directory, run the rest of the commands in
 `/<PROJECT_DIR>/workspace/F001_overlay/run.sh` that were supposed to run.
 For instance, copy/paste the lines below in the terminal.
@@ -164,6 +165,15 @@ and one operator is mapped on a quad page (the bottom right).
 
 <p align="center"> <img src="images/optical_96_routed.png" height="800"> </p>
 
+## Compile time measurement
+
+In `/<PROJECT_DIR>/`, do below to print out the compile time measurement.
+```
+make report
+```
+<p align="center"> <img src="images/report.png" > </p>
+
+
 ## Run on the device
 Once you successfully generated separate `.xclbin` files and host executable in 
 `/<PROJECT_DIR>/workspace/F005_bits_optical_flow512_96_final/sd_card/` directory,
@@ -173,31 +183,35 @@ Once you successfully generated separate `.xclbin` files and host executable in
 <p align="center"> <img src="images/sd_card_2.png" height="250"> </p>
 
 2. Copy the boot files to **BOOT**.
-```
-cp /<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/overlay_p23/package/sd_card/* /media/<YOUR_ACCOUNT>/BOOT/
-```
+   ```
+   cp /<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/overlay_p23/package/sd_card/* /media/<YOUR_ACCOUNT>/BOOT/
+   ```
 
 3. Copy rootfs files to **rootfs**. For instance,
-```
-sudo tar -zxvf /opt/platforms/xilinx_zcu102_base_dfx_202110_1/sw/xilinx_zcu102_base_dfx_202110_1/xrt/filesystem/rootfs.tar.gz -C /media/<YOUR_ACCOUNT>/rootfs/
-```
+   ```
+   sudo tar -zxvf /opt/platforms/xilinx_zcu102_base_dfx_202110_1/sw/xilinx_zcu102_base_dfx_202110_1/xrt/filesystem/rootfs.tar.gz -C /media/<YOUR_ACCOUNT>/rootfs/
+   ```
 
 4. Safely unplug the SD card from the workstation and slide it into the ZCU102. Power on the device.
 
 5. You can refer to [this post](https://dj-park.github.io/posts/2022/1/scp-emb/) set up the ip addresses for the workstation and the ZCU102.
 
 6. scp the generated `.xclbin` files and the host executable, like below.
-  Note that for the optical flow benchmark, you need to scp [current](./input_src/current) directory too.
-  The spam filter benchmark needs [data](./input_src/data) and the digit recognition needs [196data](./input_src/digit_reg_par_40).
-```
-scp -i ~/.ssh/id_rsa_zcu102 -r ./workspace/F005_bits_optical_flow_96_final/sd_card/* root@10.10.7.1:/media/sd-mmcblk0p1/
-```
-
+   Note that for the optical flow benchmark, you need to scp [current](./input_src/current) directory too.
+   The spam filter benchmark needs [data](./input_src/data) and the digit recognition needs [196data](./input_src/digit_reg_par_40).
+   Add `-i ~/.ssh/id_rsa_zcu102` if you have a key to ssh to the board.
+   ```
+   scp -r ./workspace/F005_bits_optical_flow_96_final/sd_card/* root@10.10.7.1:/media/sd-mmcblk0p1/
+   ```
 
 7. ssh to the ZCU102 and cd `/media/sd-mmcblk0p1/`. Run the application:
-```
-./run_app.sh
-```
+   ```
+   ./run_app.sh
+   ```
+   As an application latency, we include the time to set kernel argument, the time to transfer to/from data, and kernel execution time.
+   It is 8808 us for [Optical Flow (96, mix)](./input_src/optical_flow_96_final) as shown below.
+<p align="center"> <img src="images/results.png" > </p>
+
 
 ## Known Issues
 
