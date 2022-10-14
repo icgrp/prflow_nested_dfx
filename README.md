@@ -1,162 +1,11 @@
 # Fast and Flexible FPGA development using Hierarchical Partial Reconfiguration
-
-<!-- 
-
-**You don't need to install RISC-V toolchain if you only need to run hardware 
-implementation.**
-
-## 2 Benchmark Preparation
-1. To get our [Makefile](./Makefile) to work, you need to copy your application cpp
-code to a certain directory. We take 
-**rendering2** as an example.
-2. You can create the directory [rendering2](./input_src) with the same 
-name as the benchmark under '**./input_src**'.
-3. We create one cpp file and one header file for each operator. In 
-[./input_src/rendering/operators](./input_src/rendering/operators), we
-can see 2 operators to be mapped to partial reconfigurable pages.
-The directory structure is as below.
-
-```c
-├── input_src
-│   └── rendering2
-│       ├── cfg
-│       │   ├── u50.cfg
-│       ├── host
-│       │   ├── host.cpp
-│       │   ├── input_data.h
-│       │   ├── top.cpp
-│       │   ├── top.h
-│       │   └── typedefs.h
-│       ├── Makefile
-│       ├── operators
-│       │   ├── data_redir_m.cpp
-│       │   ├── data_redir_m.h
-│       │   ├── rasterization2_m.cpp
-│       │   └── rasterization2_m.h
-│       └── sw_emu
-│           ├── build_and_run.sh
-│           ├── Makefile
-│           └── xrt.ini
-```
-
-4. We can set the page number and target (HW or RISC-V) in the header file
-for each [operator](input_src/rendering2/operators/data_redir_m.h).
-
-```c
-    #pragma map_target = HW page_num = 2 inst_mem_size = 65536
-```
-
-5. Currently, we use a **top** function in [./input_src/rendering2/host/top.cpp](./input_src/rendering2/host/top.cpp)
-to show how to connect different operators together. Our python script 
-([runtime.py](./pr_flow/runtime.py)) will
-parse the top.cpp and operator header files to extract the interconnection,
-and generate the configuration packets.
- 
-
-
-## 3 Tutorial 1: Map all Operators to Hardware
-1. After you set up all the necessary tools, you need to set the directory 
-for Vitis and RISC-V toolchain in [configure.xml](./common/configure/configure.xml).
-```c
-    <spec name = "Xilinx_dir" value = "/scratch/unsafe/SDSoC/Vivado/2021.1/settings64.sh" />
-    <spec name = "RISC-V_dir"  value = "/scratch/unsafe/RISCV/RISC-V32i" />
-```
-2. You can also define specific features for ultra96 board in [comfigure.xml](./common/configure/ultra96/configure.xml), which overlaps the previous settings.
-
-3. In the [Makefile](./Makefile), change the **prj_name** to **rendering2**.
-```c
-    prj_name=rendering
-```
-
-3. Type '**Make -j$(nproc)**'. It will generate all the necessary DCP and 
-bitstream files automatically. Different operators can be compiled in 
-parallel according to the thread number of your local machine. Be careful
-with the memory requirements, when you use multi-threads to compile the 
-project. When I use 8 threads to compile, I at least need 32 GB DDR 
-memory.
-```c
-Make -j$(nproc)
-```
-
-4. After all the compile tasks are completed, you can see the abstract shell dcp for each DFX pages under [.workspace/F001_overlay/ydma/ultra96/ultra96_dfx_manual/checkpoint](workspace/F001_overlay/ydma/ultra96/ultra96_dfx_manual/checkpoint).
-
-5. This [link](https://www.hackster.io/mohammad-hosseinabady2/ultra96v2-linux-based-platform-in-xilinx-vitis-2020-1-06f226) shows how to use **GParted** to prepare the SD card to boot the Ultra96 board with Linux. It mainly partitions the SD card into **BOOT** and **rootfs** parts as below.
-
-![](images/BOOT.png)
-
-
-![](images/rootfs.png)
-
-6.  Copy the boot files to **BOOT**.
-
-
-```c
-cp <repo root>/workspace/F001_overlay/ydma/ultra96/package/sd_card/* /media/<linux account>/BOOT/
-```
-Go to the platform directory (such as **/opt/xilinx/platforms/xilinx_ultra96_base_dfx_202110_1/sw/xilinx_ultra96_base_dfx_202110_1/Petalinux/image**) and execute the commands below.
-
-```
-sudo tar -zxvf rootfs.tar.gz -C /media/<linux account>/rootfs/
-```
-
-
-7. Copy **BOOT.BIN** and **image.ub** under **./BSP** to the **BOOT** partition in the SD card to overlap the original ones. These two files come from [https://github.com/matth2k](https://github.com/matth2k).
-
-8. Copy all the files to the **BOOT** partition of our SD card for ultra96 boards.
-
-9. Boot up the board and execute the commands below.
-
-```c
-mount /dev/mmcblk0p1 /mnt
-cd /mnt
-export XILINX_XRT=/usr
-export XILINX_VITIS=/mnt
-./run_app.sh
-```
-
-10. You should see the bunny shows up in the terminal.
-
-![](images/bunny.png)
-
-
-## 4 Tutorial 2: Map one operator to RISC-V
-1. The partial reconfigurable page 2 can be mapped to picorc32 cores.
-To make sure the RISC-V core can map 'ap_int.h' and 'ap_fixed.h', the 
-smallest bram size it 65536 Bytes. We could only pre-load one page (page 2) with
-RISC-V for ultra96, but for ZCU102, we can pre-load 16 RISC-V cores.
-
-![](images/Overlay_ultra96.png)
-
-2. We are going to switch '**data_redir**' page to RISC-V.
-3. Currently, we change the pragma in [data_redir.h](./input_src/rendering2/operators/data_redir_m.h).
-```c
-    #pragma map_target = RISCV page_num = 2 inst_mem_size = 65536
-```
-4. Type '**Make**', the RISC-V core for this operator will be re-compiled automatically. Ideally, we should use an ARM to send instruction data through BFT to the pre-loaded RISC-V core. However, this feature is still in progress, and we will place\&reute the RISC-V cores over and over when we make changes to the operator. 
-
-5. Again, copy all the files to the **BOOT** partition of our SD card for ultra96 boards.
-
-6. Boot up the board and execute the commands below.
-
-```c
-mount /dev/mmcblk0p1 /mnt
-cd /mnt
-export XILINX_XRT=/usr
-export XILINX_VITIS=/mnt
-./run_app.sh
-```
-
-6. You should see the bunny shows up in the terminal.
- -->
-
-
 To address slow FPGA compilation, researchers
 have proposed to run separate compilations for smaller design
 components using Partial Reconfiguration 
 ([[Xiao/FPT2019](https://ic.ese.upenn.edu/abstracts/prflow_fpt2019.html), [Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)]).
 
 
-Different from the previous works, this work provides **variable-sized pages that
+Different from the previous works, this work provides **variable-sized** ***pages*** **that
 are hierarchically recombined from multiple smaller pages** depending on the size
 of user operators.
 This unique capability not only accelerates FPGA compilation but also relieves users of the 
@@ -167,7 +16,7 @@ The starting code is forked from [PLD](https://github.com/icgrp/pld2022) reposit
 The main differences are:
 1. static design generation using Hierarchical Partial Reconfiguration(a.k.a Nested DFX), thereby providing variable-sized PR pages
 2. synchronization after the synthesis jobs for automatic page assignment
-
+We run the system on Ubuntu 20.04 with kernel 5.4.0.
 
 ## Setup
 The framework is developed with 
@@ -193,8 +42,7 @@ Locate the image to the directory of your choice(e.g. /opt/platforms/), and adju
 ### ZCU102 Base DFX platform
 You can create ZCU102 Base DFX paltform from 
 [Vitis Embedded Platform Source repo](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.1).
-We slightly modified the floorplanning of
-[ZCU102 Base DFX platform](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2021-1.html) 
+We slightly modified the floorplanning of ZCU102 Base DFX platform
 to reserve more area for the dynamic region.
 This can be done by replacing 
 [this file](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/blob/2021.1/Xilinx_Official_Platforms/xilinx_zcu102_base_dfx/hw/sources/constraints/static_impl_early.xdc) 
@@ -296,13 +144,14 @@ python parse_ovly_util.py
 ```
 
 This conclues overlay generation and creates `/<PROJECT_DIR>/workspace/F001_overlay/` directory.
+You are now ready to separately compile operators in parallel with different sizes of PR pages!
 If you are interested in the Nested DFX,
-please take a look at [Setting PR Hierarchy in Vivado](#Setting-PR-Hierarchy-in-Vivado)
+please take a look at [Setting PR Hierarchy in Vivado](#Setting-PR-Hierarchy-in-Vivado).
 
 
 ## Compile Optical Flow benchmark
 
-cd to `/<PROJECT_DIR>/` and in [Makefile](Makefile), select the `prj_name`. Then,
+cd to `/<PROJECT_DIR>/` and in [Makefile](Makefile), select the `prj_name` with your choice of benchmark. Then,
 ```
 make all -j$(nproc)
 ```
@@ -318,6 +167,8 @@ and one operator is mapped on a quad page (the bottom right).
 <p align="center"> <img src="images/optical_96_routed.png" height="800"> </p>
 
 ## Run on the device
+Once you successfully generated separate `.xclbin` files and host executable in 
+`/<PROJECT_DIR>/workspace/F005_bits_optical_flow512_96_final/sd_card/` directory,
 
 1. Use **GParted** to prepare a SD card to boot the ZCU102 board.
 <p align="center"> <img src="images/sd_card_1.png" height="250"> </p>
