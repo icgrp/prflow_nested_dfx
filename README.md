@@ -168,7 +168,7 @@ The main differences are:
 ## Setup
 The framework is developed with 
 [Vitis 2021.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2021-1.html) 
-Xilinx ZCU102 evaluation board.
+and Xilinx ZCU102 evaluation board.
 
 ### Vitis
 If you install Vitis on **/tools/Xilinx**, you should set **Xilinx_dir** 
