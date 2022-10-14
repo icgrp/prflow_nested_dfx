@@ -167,12 +167,13 @@ and one operator is mapped on a quad page (the bottom right).
 
 ## Compile time measurement
 
-In `/<PROJECT_DIR>/`, do below to print out the compile time measurement.
+In `/<PROJECT_DIR>/`, do below to print out the compile time measurement. 
 ```
 make report
 ```
 <p align="center"> <img src="images/report.png" > </p>
-
+Each HLS, synthesis, implementation step is measured and the time is recorded in a log file. 
+After all separate compile runs are finished, we parse these log files to report the compile time.
 
 ## Run on the device
 Once you successfully generated separate `.xclbin` files and host executable in 
