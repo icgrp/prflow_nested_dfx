@@ -1,54 +1,6 @@
 # Fast and Flexible FPGA development using Hierarchical Partial Reconfiguration
 
 <!-- 
-## 1 Tool Setup
-
-### 1.1 Vitis Preparation
-The demo is developed with [Vitis 2021.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2021-1.html) 
-and [Ultra96v2 board](https://www.96boards.org/product/ultra96/).
-The default Vitis does not include Ultra96v2 BSP. You can copy the dir **ultra96v2**
-under [BSP](./BSP) to \<Vitis Installation DIR\>/Vivado/2021.1/data/xhub/boards/XilinxBoardStore/boards/Xilinx.
-If you install Vitis under **/opt/Xilinx/**, you should set the **Xilinx_dir** in  [./common/configure/ultra96/configure.xml](./common/configure/ultra96/configure.xml) as below.
-```c
-    <spec name = "Xilinx_dir" value = "/scratch/unsafe/SDSoC/Vivado/2021.1/settings64.sh" />
-```
-
-
-### 1.2  Vitis Embedded SDK Installation
-Embedded MPSoC ARMs need the specific SDK to compile the host code. Download [ZYNQMP common image](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2021-1.html) and extract the **xilinx-zynqmp-common-v2021.1.tar.gz** file to **/opt/**. Go to **/opt/xilinx-zynqmp-common-v2021.1** and execute **./sdk.sh -y -dir sdk -p**, you should see the setup script (**/opt/xilinx-zynqmp-common-v2021.1/ir/environment-setup-cortexa72-cortexa53-xilinx-linux**).
-If you install the SDK under **/opt/xilinx/platforms/**, you should set the features correctly in  [./common/configure/ultra96/configure.xml](./common/configure/ultra96/configure.xml) as below.
-
-```c
-   <spec name = "sdk_dir"             value = "/opt/xilinx/platforms/xilinx-zynqmp-common-v2021.1/ir/environment-setup-cortexa72-cortexa53-xilinx-linux" />
-```
-
-### 1.3  Ultra96 DFX Platform Preparation
-I got the DFX platform from [https://github.com/matth2k](https://github.com/matth2k). If you copy the **platforms/xilinx_ultra96_base_dfx_202110_1** to **/opt/xilinx/platforms/**, you should set the feature correctly in  [./common/configure/ultra96/configure.xml](./common/configure/ultra96/configure.xml) as below.
-
-```c
-  <spec name = "PLATFORM_REPO_PATHS" value=  "/opt/xilinx/platforms/xilinx_ultra96_base_dfx_202110_1" />
-  <spec name = "ROOTFS"              value = "/opt/xilinx/platforms/xilinx_ultra96_base_dfx_202110_1/sw/xilinx_ultra96_base_dfx_202110_1/Petalinux/rootfs" />
-  <spec name = "PLATFORM"            value = "xilinx_ultra96_base_dfx_202110_1" />
-```
-
-
-### 1.4 RISC-V Tool Praparation
-
-The RISC-V toolchain is based on picorv32 repo. You can install the RISC-V toolchain with 
-this commit tag (411d134).
-We copy the installation guide from [picorv32](https://github.com/cliffordwolf/picorv32) 
-as below.
-
-    git clone https://github.com/riscv/riscv-gnu-toolchain
-    cd riscv-gnu-toolchain/
-    git reset --hard b39e36160aa0649ba0dfb9aa314d375900d610fb
-    ./configure --prefix=/opt/riscv32 --with-arch=rv32im
-    make
-
- If install the riscv-toolchain under  **/opt/riscv32i**, you should set the feature correctly in  [./common/configure/configure.xml](./common/configure/configure.xml) as below.
-```c
-<spec name = "riscv_dir"          value = "/opt/riscv32i" />
-```
 
 **You don't need to install RISC-V toolchain if you only need to run hardware 
 implementation.**
@@ -196,6 +148,10 @@ export XILINX_VITIS=/mnt
 
 6. You should see the bunny shows up in the terminal.
  -->
+
+
+
+
 Different from the previous works, this work provides **variable-sized pages that
 are hierarchically recombined from multiple smaller pages** depending on the size
 of user operators.
@@ -208,9 +164,52 @@ The main differences are:
 1. static design generation using Hierarchical Partial Reconfiguration(a.k.a Nested DFX), thereby providing variable-sized PR pages
 2. synchronization after the synthesis jobs for automatic page assignment
 
-Note that we slightly modified the floorplanning of
-[ZCU102 Base DFX platform](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2021-1.html) to reserve more area for the dynamic region.
-This can be done by modifying [this file](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/blob/2021.1/Xilinx_Official_Platforms/xilinx_zcu102_base_dfx/hw/sources/constraints/static_impl_early.xdc).
+
+## Setup
+The framework is developed with 
+[Vitis 2021.1](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/vivado-design-tools/2021-1.html) 
+Xilinx ZCU102 evaluation board.
+
+### Vitis
+If you install Vitis on **/tools/Xilinx**, you should set **Xilinx_dir** 
+in [./common/configure/configure.xml](./common/configure/configure.xml) as below.
+```xml
+  <spec name = "Xilinx_dir" value = "/tools/Xilinx/Vitis/2021.1/setting64.sh" />
+```
+
+### Common image
+The ZYNQMP common image file can be downloaded from the [Vitis Embedded Platforms](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2021-1.html)
+page.
+Locate the image to the directory of your choice(e.g. /opt/platforms/), and adjust the configuration in 
+[./common/configure/zcu102/configure.xml](./common/configure/zcu102/configure.xml) as below.
+```xml
+  <spec name = "sdk_dir"             value = "/opt/platforms/xilinx-zynqmp-common-v2021.1/ir/environment-setup-cortexa72-cortexa53-xilinx-linux" />
+```
+
+### ZCU102 Base DFX platform
+You can create ZCU102 Base DFX paltform from 
+[Vitis Embedded Platform Source repo](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/tree/2021.1).
+We slightly modified the floorplanning of
+[ZCU102 Base DFX platform](https://www.xilinx.com/support/download/index.html/content/xilinx/en/downloadNav/embedded-platforms/2021-1.html) 
+to reserve more area for the dynamic region.
+This can be done by replacing 
+[this file](https://github.com/Xilinx/Vitis_Embedded_Platform_Source/blob/2021.1/Xilinx_Official_Platforms/xilinx_zcu102_base_dfx/hw/sources/constraints/static_impl_early.xdc) 
+to our [modified xdc file](./common/etc/static_impl_early.xdc).
+You can follow the instructions to generate the ZCU102 DFX platform.
+For instance, 
+```bash
+cd ./Xilinx_Official_Platforms/xilinx_zcu102_base_dfx/
+source /PETALINUX_DIR/petalinux/2021.1/settings.sh
+make all
+```
+
+Once you successfully generated ZCU102 DFX platform, locate the generated platform to the directory of your choice(e.g. /opt/platforms/),
+and adjust the configurations in [./common/configure/zcu102/configure.xml](./common/configure/zcu102/configure.xml) as below.
+```xml
+  <spec name = "PLATFORM_REPO_PATHS" value=  "/opt/platforms/xilinx_zcu102_base_dfx_202110_1" />
+  <spec name = "ROOTFS"              value = "/opt/platforms/xilinx_zcu102_base_dfx_202110_1/sw/xilinx_zcu102_base_dfx_202110_1/xrt/filesystem" />
+  <spec name = "PLATFORM"            value = "xilinx_zcu102_base_dfx_202110_1" />
+```
 
 ## Static design generation
 
