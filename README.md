@@ -262,18 +262,21 @@ When generating an overlay, you should encounter an `ERROR: [DRC RTSTAT-5] Parti
 
 ![](images/partial_ant_error.png)
 
-In this case, cd to `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` and open up Vivado GUI with
-`vivado &`. In Tcl console, copy and paste the scripts that encountered the errors.
+We consider this as a potential bug in Vivado.
+In this case, cd to `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` and open up **Vivado GUI** with
+`vivado &`. In Tcl console, manually copy and paste the contents of the scripts that encountered the errors.
 With the given floorplanning(\*.xdc files), scripts that cause this error are:
 
 - `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/tcl/nested/pr_recombine_dynamic_region.tcl`
 - `/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/tcl/nested/pr_recombine_p8.tcl`
 
-Once you manually generate `dynamic_region.bit` and `p8.dcp`, you can restart the Makefile in
-`/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` directory by entering `make all -j24`,
-with the number of jobs you want to run in parallel. Then, in the same directory, run the rest of the commands in
+Once you manually generate `dynamic_region.bit` and `p8.dcp`, 
+cd to 
+`/<PROJECT_DIR>/workspace/F001_overlay/ydma/zcu102/zcu102_dfx_manual/` directory 
+and continue the Makefile by entering `make all -j$(proc)`. 
+Then, in the same directory, run the rest of the commands in
 `/<PROJECT_DIR>/workspace/F001_overlay/run.sh` that were supposed to run.
-
+For instance, copy/paste the lines below in the terminal.
 ```
 ./shell/run_xclbin.sh
 cd ../../../
