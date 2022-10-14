@@ -150,6 +150,10 @@ export XILINX_VITIS=/mnt
  -->
 
 
+To address slow FPGA compilation, researchers
+have proposed to run separate compilations for smaller design
+components using Partial Reconfiguration 
+([[Xiao/FPT2019](https://ic.ese.upenn.edu/abstracts/prflow_fpt2019.html), [Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)]).
 
 
 Different from the previous works, this work provides **variable-sized pages that
