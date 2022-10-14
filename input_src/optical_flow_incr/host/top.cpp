@@ -131,16 +131,14 @@ void top(//frames_t   frames[MAX_HEIGHT][MAX_WIDTH],
   static hls::stream<bit64> tran_out;
 
   data_transfer(Input_1, tran_out);
-  gradient_xyz_calc(tran_out, gradient_x, gradient_y, gradient_z);
-  gradient_weight_y_1(gradient_x, y_filtered_x);
-  gradient_weight_y_2(gradient_y, y_filtered_y);
-  gradient_weight_y_3(gradient_z, y_filtered_z);
-
-  gradient_weight_x_1(y_filtered_x,filtered_gradient_x1);
-  gradient_weight_x_2(y_filtered_y,filtered_gradient_y1);
-  gradient_weight_x_3(y_filtered_z,filtered_gradient_z1);
+  gradient_xyz_calc(tran_out, gradient_x, gradient_y,gradient_z);
+  gradient_weight_y_1(gradient_x, gradient_y, gradient_z, y_filtered_x, y_filtered_y, y_filtered_z);
+  gradient_weight_x_1(y_filtered_x, y_filtered_y, y_filtered_z, filtered_gradient_x1, filtered_gradient_y1, filtered_gradient_z1);
+  outer_product(filtered_gradient_x1, filtered_gradient_y1, filtered_gradient_z1, outer_product_out_1);
   
-  flow_calc_1(filtered_gradient_x1, filtered_gradient_y1, filtered_gradient_z1, in, in1); // 6 * 48 + 32 * 2
+  tensor_weight_y_1(outer_product_out_1,tensor_y_1_out); // 6 * 48 + 6 * 48
+  tensor_weight_x_1(tensor_y_1_out,tensor_x_1_out); // 6 * 48 + 6 * 48
+  flow_calc_1(tensor_x_1_out, in, in1); // 6 * 48 + 32 * 2
 
   output_fun(in,in1,Output_1);
 }

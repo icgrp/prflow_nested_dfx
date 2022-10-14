@@ -12,7 +12,8 @@ export PLATFORM=
 #export MaxJobNum=10
 
 Xilinx_dir
-xrt_dir
+# Embedded platform doesn't need XRT_DIR
+
 unset LD_LIBRARY_PATH
 
 sdk_dir

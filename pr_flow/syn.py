@@ -278,13 +278,16 @@ class syn(gen_basic):
     # copy resource data for the board
     self.shell.cp_dir('./common/script_src/resource_' + self.prflow_params['board'] + '.txt', self.syn_dir + '/resource.txt')
 
-    if map_target == 'HW': 
-      self.prepare_HW(operator, page_num, monitor_on)
-    else:
-      # prepare script files for riscv implementation.
-      # As we don't need to compile any verilog files, we only need to perform 
-      # RISC-V compile flow
-      self.prepare_RISCV(operator, page_num, input_num, output_num)
+
+    # Not using RISC-V
+    self.prepare_HW(operator, page_num, monitor_on)
+    # if map_target == 'HW': 
+    #   self.prepare_HW(operator, page_num, monitor_on)
+    # else:
+    #   # prepare script files for riscv implementation.
+    #   # As we don't need to compile any verilog files, we only need to perform 
+    #   # RISC-V compile flow
+    #   self.prepare_RISCV(operator, page_num, input_num, output_num)
 
 
   def run(self, operator, monitor_on=False):

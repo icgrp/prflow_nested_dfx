@@ -78,7 +78,6 @@ syn:$(operators_syn_targets)
 # Out-of-Context Synthesis from Verilog to post-synthesis DCP
 $(operators_syn_targets):$(ws_syn)/%/page_netlist.dcp:$(ws_hls)/runLog%.log $(ws_overlay)$(overlay_suffix)/__overlay_is_ready__ ./pr_flow/syn.py
 	python2 pr_flow.py $(prj_name) -syn -op $(subst runLog,,$(basename $(notdir $<)))
-	#cd $(ws_syn)/$(subst runLog,,$(basename $(notdir $<)))/riscv && ./qsub_run.sh
 	cd $(ws_syn)/$(subst runLog,,$(basename $(notdir $<))) && ./main.sh $(operators)
 
 # HLS
@@ -106,7 +105,22 @@ overlay_only:
 	python2 pr_flow.py $(prj_name) -g -op '$(basename $(notdir $(operators)))' -bft_n=$(bft_n)
 	cd ./workspace/F001_overlay$(overlay_suffix) && ./main.sh
 
+
+
+clear:
+	rm -rf ./workspace/*$(prj_name)
+
+clean:
+	rm -rf ./workspace
+	rm -rf ./pr_flow/*.pyc
+
+clear_impl:
+	rm -rf ./workspace/F004_impl_$(prj_name)
+	rm -rf ./workspace/F005_bits_$(prj_name)
+
+
 # Incremental compile
+prj_name=optical_flow_incr
 incr:
 	python2 pr_flow.py $(prj_name) -incr -op '$(operators)'
 run_on_fpga:
@@ -122,15 +136,3 @@ revert_to_init:
 	rm -rf ./input_src/$(prj_name)/operators/*.cpp ./input_src/$(prj_name)/operators/*.h ./input_src/$(prj_name)/operators/*.json
 	cp ./input_src/$(prj_name)/operators/_original/* ./input_src/$(prj_name)/operators/
 	mv ./input_src/$(prj_name)/operators/top.cpp ./input_src/$(prj_name)/host/top.cpp
-
-
-clear:
-	rm -rf ./workspace/*$(prj_name)
-
-clean:
-	rm -rf ./workspace
-	rm -rf ./pr_flow/*.pyc
-
-clear_impl:
-	rm -rf ./workspace/F004_impl_$(prj_name)
-	rm -rf ./workspace/F005_bits_$(prj_name)

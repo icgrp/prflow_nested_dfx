@@ -1,5 +1,5 @@
 import os.path
-from natsort import natsorted
+# from natsort import natsorted
 import math
 import json
 
@@ -276,7 +276,8 @@ def main():
 
 
     blocked_resource_final_dict = {}
-    for blocked_file in natsorted(blocked_files):
+    # for blocked_file in natsorted(blocked_files):
+    for blocked_file in blocked_files:
         blocked_sites_file = os.path.dirname(blocked_file) + '/blockedSitesInputs.tcl'
         blocked_file_short = blocked_file.split('.tcl')[0] + '_short.tcl'
         print(blocked_file)
@@ -397,7 +398,8 @@ def main():
         for pblock_name in pblock_resource_dict:
             blocked_resource_count_dict[pblock_name] = {}
 
-        for pblock_name in natsorted(blocked_resource_loc_dict.keys()):
+        # for pblock_name in natsorted(blocked_resource_loc_dict.keys()):
+        for pblock_name in blocked_resource_loc_dict.keys():
             # print(pblock_name)
             for resource_type in blocked_resource_loc_dict[pblock_name]:
                 if(resource_type == 'SLICE'):

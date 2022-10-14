@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <spec name = "riscv_dir"          value = "/opt/riscv32" />
+<!--   <spec name = "riscv_dir"          value = "/opt/riscv32" /> -->
   <spec name = "overlay_type"       value = "psnoc" />
 <!--   <spec name = "overlay_type"       value = "hipr" /> -->
   <!--spec name = "riscv_dir"          value = "/scratch/unsafe/RISCV/riscv32i" -->
@@ -10,7 +10,7 @@
   <!--spec name = "board"              value = "au50" -->
   <spec name = "board"              value = "zcu102" />
   <spec name = "Xilinx_dir"         value = "/tools/Xilinx/Vitis/2021.1/settings64.sh" />
-  <spec name = "xrt_dir"            value = "/opt/xilinx/xrt/setup.sh" />
+  <spec name = "xrt_dir"            value = "/opt/xilinx/xrt/setup.sh" /> <!-- Not necessary for embedded platform -->
 
 
   <spec name = "email"              value = "you_email@seas.upenn.edu" />
