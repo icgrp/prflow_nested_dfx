@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<Runs Version="1" Minor="0">
-	<Run Id="ydma" LaunchDir="/home/dopark/workspace/zcu102_tuning/prflow_riscv/input_src/rendering512/sw_emu/_x/ydma/ydma" FlowId="Build_IP" FromStepId="vitis_hls" ToStepId="vitis_hls"/>
-</Runs>
-

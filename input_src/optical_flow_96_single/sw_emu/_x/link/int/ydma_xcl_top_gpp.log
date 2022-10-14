@@ -1,4 +1,0 @@
-In file included from xcl_top.cpp:3:
-/tools/Xilinx/Vitis/2021.1/bin/../data/emulation/include/xcl_top_defines.h:83:58: warning: backslash-newline at end of file
-   83 | #define __XLNX_DEFINE_STREAM_FUNCS__(kname,argtype,type) \
-      |                                                           
