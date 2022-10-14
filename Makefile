@@ -120,7 +120,7 @@ clear_impl:
 
 
 # Incremental compile
-prj_name=optical_flow_incr
+# prj_name=optical_flow_incr
 incr:
 	python2 pr_flow.py $(prj_name) -incr -op '$(operators)'
 run_on_fpga:
