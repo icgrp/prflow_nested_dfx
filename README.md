@@ -174,6 +174,7 @@ make report
 <p align="center"> <img src="images/report.png" > </p>
 HLS, synthesis, and implementation step for each operator is measured and the time is recorded in a log file. 
 After all runs are finished, we parse these log files to report the compile time.
+For a comparison against the monolithic flow of Vitis, refer to [Rosetta Benchmark on ZCU102](https://github.com/icgrp/rosetta_vitis/tree/zcu102(2021.1)).
 
 ## Run on the device
 Once you successfully generated separate `.xclbin` files and host executable in 
