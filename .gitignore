@@ -1,0 +1,6 @@
+# Python cache
+pr_flow/*.pyc
+pr_flow/__pycache__
+
+# Experiment dir
+workspace
