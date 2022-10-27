@@ -11,12 +11,8 @@ unset LD_LIBRARY_PATH
 # sdk_dir
 
 ${CXX} -Wall -g -std=c++11 host.cpp -o ./app.exe \
-		-I/usr/include/xrt \
 		-I${XILINX_VIVADO}/include \
-		-lOpenCL \
-		-lpthread \
-		-lrt \
-		-lstdc++
+		-lOpenCL -lpthread -lrt -lstdc++
 
 # cp_cmd
 
