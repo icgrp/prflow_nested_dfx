@@ -326,6 +326,7 @@ class overlay(gen_basic):
       with open(directory + 'nested/' + shellfile, "r") as file:
         filedata = file.read()
       filedata = filedata.replace("/checkpoint", "/overlay_p"+str(bft_n))
+      filedata = filedata.replace("Xilinx_dir",'source '+self.prflow_params['Xilinx_dir'])
       with open(directory + 'nested/' + shellfile, "w") as file:
         file.write(filedata)
 

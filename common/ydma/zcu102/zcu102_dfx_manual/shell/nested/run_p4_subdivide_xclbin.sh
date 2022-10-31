@@ -1,5 +1,5 @@
 #!/bin/bash -e
-source /tools/Xilinx/Vitis/2021.1/settings64.sh
+Xilinx_dir
 bitstream=./checkpoint/p4_subdivide.bit
 xmlfile=./shell/nested/p4_subdivide.xml
 xclbin=./checkpoint/p4_subdivide.xclbin

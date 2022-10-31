@@ -1,5 +1,5 @@
 #!/bin/bash -e
-source /tools/Xilinx/Vitis/2021.1/settings64.sh
+Xilinx_dir
 bitstream=./checkpoint/dynamic_region.bit
 xmlfile=./shell/nested/dynamic_region.xml
 xclbin=./checkpoint/dynamic_region.xclbin
