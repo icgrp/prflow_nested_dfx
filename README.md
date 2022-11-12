@@ -7,7 +7,7 @@ Different from the previous works, this work provides **variable-sized** ***page
 are hierarchically recombined from multiple smaller pages** depending on the size
 of user operators.
 This unique capability not only accelerates FPGA compilation but also relieves users of the 
-burden to fit the operators to the fixed-sized pages. For more details, please refer to our FPT2022 paper.
+burden to fit the operators to the fixed-sized pages. For more details, please refer to [our FPT2022 paper](https://ic.ese.upenn.edu/pdf/nested_dfx_fpt2022.pdf).
 
 The starting code is forked from [PLD](https://github.com/icgrp/pld2022) repository
 [[Xiao/ASPLOS2022](https://ic.ese.upenn.edu/abstracts/pld_asplos2022.html)].
