@@ -1,3 +1,5 @@
+This repo received all four Artifact Evaluation badges (Available, Functional, Reusable, Replicated) from FPT2022.
+
 # Fast and Flexible FPGA development using Hierarchical Partial Reconfiguration
 To address slow FPGA compilation, researchers
 have proposed to run separate compilations for smaller design
@@ -216,8 +218,11 @@ Once you successfully generated separate `.xclbin` files and host executable in
    It is 8808 us for [Optical Flow (96, mix)](./input_src/optical_flow_96_final) as shown below.
    <p align="center"> <img src="images/results.png" height="700"> </p>
 
+<br />
+<br />
+<br />
 
-## Known Issues
+## Appendix
 
 ### Setting PR Hierarchy in Vivado
 
